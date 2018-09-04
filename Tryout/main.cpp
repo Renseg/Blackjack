@@ -13,7 +13,9 @@
 //for the sleep/pause
 #include <chrono>
 #include <thread>
+//for setw()
 #include <iomanip>
+#include <string>
 
 using namespace std;
 int main(int argc, const char * argv[]) {
@@ -21,33 +23,41 @@ int main(int argc, const char * argv[]) {
 
     //array of random_integer with two numbers to store. [0] being first hit and total sum
     //and [1] being the card you add to [0]
-    int random_integer[2];
+    int random_integer[2], dealer_int[2], active;
+    string hit;
     
     cout << "_______________" << endl;
     cout << "-- BLACKJACK --" << endl;
     cout << "_______________" << endl;
     this_thread::sleep_for(chrono::milliseconds(1000));
     cout << "Deal the cards?" << endl;
+    cout << "type: 1" << endl;
+    cin >> active;
     
-    
-    
-    
+    //while active = 1 the game will play
+     do {
+         
     //generate random number for random_integer[0]
     srand(time(0));
         random_integer[0] = (rand()%10)+1;
-    
+  
     //show random number random_integer[0]
     cout << "--------" << setw(12) << "---" << endl;
     cout << "you hit " << setw(10)<< "|" << random_integer[0] << "|" << endl;
     
-    
-    
+        
     //stop for 1 second
     this_thread::sleep_for(chrono::milliseconds(1000));
-    
-    //increase array [0] of random_integer with a number from 1 - 10 while it is less than 21
-    do {
-      
+             
+         cout << "do you hit again" << endl;
+         cout << "yes" << setw(12) << "no" << endl;
+         cin >> hit;
+        
+        if (hit == "yes")
+        {
+         do
+         {
+             
         //generate random number for random_integer[1]
     srand(time(0));
     random_integer[1] = (rand()%10)+1;
@@ -68,10 +78,25 @@ int main(int argc, const char * argv[]) {
         
         //stop for 1 second
         this_thread::sleep_for(chrono::milliseconds(1000));
-        
-        
+             
+             cout << "do you hit again" << endl;
+             cout << "yes" << setw(12) << "no" << endl;
+             cin >> hit;
+             cout << hit << endl;
+             
+         }
+         while (hit=="yes");
+        }
+         else
+        {
+        if(random_integer[0] <= 21)
+        {
+            cout << random_integer[0] << endl;
+            
+        }
+        }
     }
-    while(random_integer[0] < 21);
+    while(active==1);
     
     return 0;
 }
